@@ -1,5 +1,5 @@
 {
-    "name": "lowgravitypl/raccoon-core",
+    "name": "lowgravitypl/raccoonwp-core",
     "description": "RaccoonWP is an opinionated WordPress architecture stack and starter theme",
     "license": "MIT",
     "keywords": [
@@ -18,6 +18,11 @@
         {
             "name": "Lucas Grzegorczyk",
             "email": "lucasgrzegorczyk@gmail.com"
+        },
+        {
+            "name": "Matthew Grzegorczyk",
+            "email": "matthewgrzegorczyk@gmail.com",
+            "homepage": "https://matthew.grzegorczyk.me"
         }
     ],
     "config": {
