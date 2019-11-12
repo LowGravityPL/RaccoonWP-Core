@@ -7,6 +7,7 @@ use Dotenv\Dotenv;
 
 /**
  * Class RaccoonApp
+ *
  * @package RaccoonWP
  */
 class RaccoonApp
@@ -35,8 +36,10 @@ class RaccoonApp
 
     /**
      * RaccoonApp constructor.
+     *
+     * @param string $root_directory
      */
-    public function __construct()
+    public function __construct($root_directory = null)
     {
 
         try {
@@ -46,7 +49,7 @@ class RaccoonApp
             die();
         }
 
-        $this->root_dir        = dirname(__FILE__, 2);
+        $this->root_dir        = ! empty($root_directory) ? $root_directory : '';
         $this->public_root_dir = $this->root_dir . '/' . self::WEB_ROOT_DIRECTORY_NAME;
     }
 
@@ -61,7 +64,7 @@ class RaccoonApp
         if (version_compare(phpversion(), self::MIN_PHP_VERSION, '<')) {
             throw new \Exception('Your installed PHP version is not sufficient to run RaccoonWP project');
         }
-        if ( ! class_exists('\\Dotenv\\Dotenv')) {
+        if (!class_exists('\\Dotenv\\Dotenv')) {
             throw new \Exception('Dotenv extension is missing. Did you run composer install?');
         }
     }
@@ -134,7 +137,7 @@ class RaccoonApp
         //URLs and directories
         define('WP_HOME', getenv('WP_HOME'));
 
-        if(getenv('WP_SITEURL') ) {
+        if (getenv('WP_SITEURL')) {
             define('WP_SITEURL', getenv('WP_SITEURL'));
         } else {
             define('WP_SITEURL', getenv('WP_HOME') . '/' . self::WP_INSTALL_DIRECTORY_NAME);
@@ -147,7 +150,7 @@ class RaccoonApp
         define('AUTOMATIC_UPDATER_DISABLED', true);
 
         // Set the absolute path to the WordPress directory.
-        if ( ! defined('ABSPATH')) {
+        if (!defined('ABSPATH')) {
             define('ABSPATH', $this->public_root_dir . '/' . $this->wp_dir_name . '/');
         }
     }
@@ -164,9 +167,9 @@ class RaccoonApp
             return;
         }
 
-        $conf_file = __DIR__ . '/configuration/' . $env_type . '.php';
+        $conf_file = $this->root_dir . '/configuration/' . $env_type . '.php';
         if (file_exists($conf_file)) {
-            require_once($conf_file);
+            require_once $conf_file;
         }
     }
 

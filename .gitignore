@@ -1,0 +1,9 @@
+#File System
+.DS_Store
+
+#IDE
+/.idea
+/.vscode
+
+# Composer
+/vendor/
