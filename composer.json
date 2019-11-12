@@ -1,0 +1,41 @@
+{
+    "name": "lowgravitypl/raccoon-core",
+    "description": "RaccoonWP is an opinionated WordPress architecture stack and starter theme",
+    "license": "MIT",
+    "keywords": [
+        "raccoon",
+        "wordpress",
+        "composer",
+        "boilerplate",
+        "stack"
+    ],
+    "authors": [
+        {
+            "name": "Kamil Grzegorczyk",
+            "email": "kamilgrzegorczyk@gmail.com",
+            "homepage": "https://kamilgrzegorczyk.com"
+        },
+        {
+            "name": "Lucas Grzegorczyk",
+            "email": "lucasgrzegorczyk@gmail.com"
+        }
+    ],
+    "config": {
+        "preferred-install": "dist",
+        "sort-packages": true
+    },
+    "autoload": {
+        "psr-4": {
+            "RaccoonWP\\": "src/"
+        }
+    },
+    "repositories": [
+        {
+            "type": "composer",
+            "url": "https://wpackagist.org"
+        }
+    ],
+    "require": {
+        "php": "^7.1.3"
+    }
+}
