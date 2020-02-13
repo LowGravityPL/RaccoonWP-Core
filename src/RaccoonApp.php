@@ -37,9 +37,10 @@ class RaccoonApp
     /**
      * RaccoonApp constructor.
      *
-     * @param string $root_directory
+     * @param string $root_directory Root directory of the project
+     * @param string $web_root_directory_name web root directory i.e. 'public' or 'web'
      */
-    public function __construct($root_directory = null)
+    public function __construct($root_directory = null, $web_root_directory_name = null)
     {
 
         try {
@@ -50,7 +51,7 @@ class RaccoonApp
         }
 
         $this->root_dir        = ! empty($root_directory) ? $root_directory : '';
-        $this->public_root_dir = $this->root_dir . '/' . self::WEB_ROOT_DIRECTORY_NAME;
+        $this->public_root_dir = $this->root_dir . '/' . ($web_root_directory_name ?? self::WEB_ROOT_DIRECTORY_NAME);
     }
 
     /**
