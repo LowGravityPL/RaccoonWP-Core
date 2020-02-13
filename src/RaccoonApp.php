@@ -14,7 +14,7 @@ class RaccoonApp
 {
 
     /** @var string Minimal PHP version */
-    const MIN_PHP_VERSION = '7.1.3';
+    const MIN_PHP_VERSION = '7.2';
     /** @var string Name of the WP installation directory */
     const WP_INSTALL_DIRECTORY_NAME = 'wp';
     /** @var string Name of the content (wp-content) directory */
