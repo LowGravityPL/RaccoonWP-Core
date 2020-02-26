@@ -93,14 +93,14 @@ class RaccoonApp
         $dotenv = Dotenv::create($this->root_dir);
 
         if (file_exists($this->root_dir . '/.env')) {
-
             $dotenv->load();
-            $dotenv->required([
-                'DB_NAME',
-                'DB_USER',
-                'DB_PASSWORD',
-                'WP_HOME',
-            ]);
+            $dotenv->required(
+                [
+                    'DB_NAME',
+                    'DB_USER',
+                    'DB_PASSWORD'
+                ]
+            );
         }
     }
 
