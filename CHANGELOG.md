@@ -1,3 +1,7 @@
+2.2 [24th of March 2020]
+- Move vlucas/phpdotenv from RaccoonWP to RaccoonWP-Core
+- Bump minimum required PHP version
+
 2.1.1 [13th of February 2020]
 - Remove WP_HOME from dotenv required params
 
