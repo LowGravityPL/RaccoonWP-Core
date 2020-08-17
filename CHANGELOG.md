@@ -1,3 +1,6 @@
+2.2.1 [17th of August 2020]
+- regular maintenance update - update composer dependenciesq
+
 2.2 [24th of March 2020]
 - Move vlucas/phpdotenv from RaccoonWP to RaccoonWP-Core
 - Bump minimum required PHP version
