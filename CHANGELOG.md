@@ -1,5 +1,8 @@
+2.2.2 [20th of August 2020]
+- allow for setting the AUTOMATIC_UPDATER_DISABLED constant in environment configs
+
 2.2.1 [17th of August 2020]
-- regular maintenance update - update composer dependenciesq
+- regular maintenance update - update composer dependencies
 
 2.2 [24th of March 2020]
 - Move vlucas/phpdotenv from RaccoonWP to RaccoonWP-Core
