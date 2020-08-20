@@ -148,7 +148,9 @@ class RaccoonApp
         define('WP_CONTENT_URL', WP_HOME . '/' . self::CONTENT_DIRECTORY_NAME);
 
         //Disallow WordPress from updating itself automatically since we manage its version in Composer
-        define('AUTOMATIC_UPDATER_DISABLED', true);
+        if (!defined('AUTOMATIC_UPDATER_DISABLED')) {
+            define('AUTOMATIC_UPDATER_DISABLED', true);
+        }
 
         // Set the absolute path to the WordPress directory.
         if (!defined('ABSPATH')) {
