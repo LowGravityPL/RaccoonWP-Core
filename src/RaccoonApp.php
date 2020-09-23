@@ -114,6 +114,12 @@ class RaccoonApp
 
         $env_type = getenv('WP_ENV') ?: 'production';
         define('WP_ENV', $env_type);
+
+        //compatibility with the new 5.5 wp_get_environment_type()
+        if (!defined('WP_ENVIRONMENT_TYPE')) {
+            define('WP_ENVIRONMENT_TYPE', $env_type);
+        }
+
         $this->MaybeLoadEnvironmentConfiguration($env_type);
 
         /**
