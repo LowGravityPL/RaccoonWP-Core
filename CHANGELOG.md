@@ -1,5 +1,6 @@
 2.3 [23rd of September 2020]
 - add support for wp_get_environment_type added in WP Core 5.5
+- update vlucas/phpdotenv to 5.2
 
 2.2.2 [20th of August 2020]
 - allow for setting the AUTOMATIC_UPDATER_DISABLED constant in environment configs
