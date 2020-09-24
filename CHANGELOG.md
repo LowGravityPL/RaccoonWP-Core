@@ -1,3 +1,6 @@
+2.3.1 [24th of September 2020]
+- change usage of getenv to $_ENV. Potentially dangerous, needs investigation.
+
 2.3 [23rd of September 2020]
 - add support for wp_get_environment_type added in WP Core 5.5
 - update vlucas/phpdotenv to 5.2
