@@ -112,7 +112,7 @@ class RaccoonApp
     protected function setupApplication()
     {
 
-        $env_type = getenv('WP_ENV') ?: 'production';
+        $env_type = $_ENV['WP_ENV'] ?: 'production';
         define('WP_ENV', $env_type);
 
         //compatibility with the new 5.5 wp_get_environment_type()
@@ -125,29 +125,29 @@ class RaccoonApp
         /**
          * DB settings
          */
-        define('DB_NAME', getenv('DB_NAME'));
-        define('DB_USER', getenv('DB_USER'));
-        define('DB_PASSWORD', getenv('DB_PASSWORD'));
-        define('DB_HOST', getenv('DB_HOST') ?: 'localhost');
+        define('DB_NAME', $_ENV['DB_NAME']);
+        define('DB_USER', $_ENV['DB_USER']);
+        define('DB_PASSWORD', $_ENV['DB_PASSWORD']);
+        define('DB_HOST', $_ENV['DB_HOST'] ?: 'localhost');
         define('DB_CHARSET', 'utf8mb4');
         define('DB_COLLATE', '');
 
-        define('AUTH_KEY', getenv('AUTH_KEY'));
-        define('SECURE_AUTH_KEY', getenv('SECURE_AUTH_KEY'));
-        define('LOGGED_IN_KEY', getenv('LOGGED_IN_KEY'));
-        define('NONCE_KEY', getenv('NONCE_KEY'));
-        define('AUTH_SALT', getenv('AUTH_SALT'));
-        define('SECURE_AUTH_SALT', getenv('SECURE_AUTH_SALT'));
-        define('LOGGED_IN_SALT', getenv('LOGGED_IN_SALT'));
-        define('NONCE_SALT', getenv('NONCE_SALT'));
+        define('AUTH_KEY', $_ENV['AUTH_KEY']);
+        define('SECURE_AUTH_KEY', $_ENV['SECURE_AUTH_KEY']);
+        define('LOGGED_IN_KEY', $_ENV['LOGGED_IN_KEY']);
+        define('NONCE_KEY', $_ENV['NONCE_KEY']);
+        define('AUTH_SALT', $_ENV['AUTH_SALT']);
+        define('SECURE_AUTH_SALT', $_ENV['SECURE_AUTH_SALT']);
+        define('LOGGED_IN_SALT', $_ENV['LOGGED_IN_SALT']);
+        define('NONCE_SALT', $_ENV['NONCE_SALT']);
 
         //URLs and directories
-        define('WP_HOME', getenv('WP_HOME'));
+        define('WP_HOME', $_ENV['WP_HOME']);
 
-        if (getenv('WP_SITEURL')) {
-            define('WP_SITEURL', getenv('WP_SITEURL'));
+        if ($_ENV['WP_SITEURL']) {
+            define('WP_SITEURL', $_ENV['WP_SITEURL']);
         } else {
-            define('WP_SITEURL', getenv('WP_HOME') . '/' . self::WP_INSTALL_DIRECTORY_NAME);
+            define('WP_SITEURL', $_ENV['WP_HOME'] . '/' . self::WP_INSTALL_DIRECTORY_NAME);
         }
 
         define('WP_CONTENT_DIR', $this->public_root_dir . '/' . self::CONTENT_DIRECTORY_NAME);
