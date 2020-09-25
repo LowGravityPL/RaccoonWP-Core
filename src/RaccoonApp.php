@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace RaccoonWP;
@@ -42,7 +43,6 @@ class RaccoonApp
      */
     public function __construct($root_directory = null, $web_root_directory_name = null)
     {
-
         try {
             $this->checkRequirements();
         } catch (\Exception $e) {
@@ -50,15 +50,15 @@ class RaccoonApp
             die();
         }
 
-        $this->root_dir        = ! empty($root_directory) ? $root_directory : '';
+        $this->root_dir = !empty($root_directory) ? $root_directory : '';
         $this->public_root_dir = $this->root_dir . '/' . ($web_root_directory_name ?? self::WEB_ROOT_DIRECTORY_NAME);
     }
 
     /**
      * Checks if the system meets minimum requirements like PHP version of presence of DotEnv class
      *
-     * @throws \Exception
      * @return void
+     * @throws \Exception
      */
     protected function checkRequirements()
     {
@@ -90,7 +90,7 @@ class RaccoonApp
      */
     protected function initializeDotEnv()
     {
-        $dotenv = Dotenv::createImmutable($this->root_dir);
+        $dotenv = Dotenv::createUnsafeImmutable($this->root_dir);
 
         if (file_exists($this->root_dir . '/.env')) {
             $dotenv->load();
@@ -111,7 +111,6 @@ class RaccoonApp
      */
     protected function setupApplication()
     {
-
         $env_type = $_ENV['WP_ENV'] ?: 'production';
         define('WP_ENV', $env_type);
 
@@ -121,6 +120,7 @@ class RaccoonApp
         }
 
         $this->MaybeLoadEnvironmentConfiguration($env_type);
+        $this->MaybeLoadCommonEnvironmentsConfiguration();
 
         /**
          * DB settings
@@ -166,6 +166,8 @@ class RaccoonApp
 
     /**
      * Loads environment specific configuration if the file exists.
+     * Place your configuration file into /configuration/{ENV_NAME}.php
+     * For example /configuration/production.php
      *
      * Configuration files can be used to store all the environment data which actually can
      * and should land in the repository (contrary to .env files with DB access data and other critical information)
@@ -177,6 +179,21 @@ class RaccoonApp
         }
 
         $conf_file = $this->root_dir . '/configuration/' . $env_type . '.php';
+        if (file_exists($conf_file)) {
+            require_once $conf_file;
+        }
+    }
+
+    /**
+     * Loads environments' common configuration if the file exists.
+     * Place your configuration file into /configuration/common.php
+     *
+     * Configuration files can be used to store all the environment data which actually can
+     * and should land in the repository (contrary to .env files with DB access data and other critical information)
+     */
+    protected function MaybeLoadCommonEnvironmentsConfiguration()
+    {
+        $conf_file = $this->root_dir . '/configuration/common.php';
         if (file_exists($conf_file)) {
             require_once $conf_file;
         }
