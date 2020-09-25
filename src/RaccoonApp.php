@@ -1,4 +1,5 @@
 <?php
+
 declare(strict_types=1);
 
 namespace RaccoonWP;
@@ -42,7 +43,6 @@ class RaccoonApp
      */
     public function __construct($root_directory = null, $web_root_directory_name = null)
     {
-
         try {
             $this->checkRequirements();
         } catch (\Exception $e) {
@@ -50,15 +50,15 @@ class RaccoonApp
             die();
         }
 
-        $this->root_dir        = ! empty($root_directory) ? $root_directory : '';
+        $this->root_dir = !empty($root_directory) ? $root_directory : '';
         $this->public_root_dir = $this->root_dir . '/' . ($web_root_directory_name ?? self::WEB_ROOT_DIRECTORY_NAME);
     }
 
     /**
      * Checks if the system meets minimum requirements like PHP version of presence of DotEnv class
      *
-     * @throws \Exception
      * @return void
+     * @throws \Exception
      */
     protected function checkRequirements()
     {
@@ -111,7 +111,6 @@ class RaccoonApp
      */
     protected function setupApplication()
     {
-
         $env_type = $_ENV['WP_ENV'] ?: 'production';
         define('WP_ENV', $env_type);
 
