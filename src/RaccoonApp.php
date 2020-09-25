@@ -121,6 +121,7 @@ class RaccoonApp
         }
 
         $this->MaybeLoadEnvironmentConfiguration($env_type);
+        $this->MaybeLoadCommonEnvironmentsConfiguration();
 
         /**
          * DB settings
@@ -166,6 +167,8 @@ class RaccoonApp
 
     /**
      * Loads environment specific configuration if the file exists.
+     * Place your configuration file into /configuration/{ENV_NAME}.php
+     * For example /configuration/production.php
      *
      * Configuration files can be used to store all the environment data which actually can
      * and should land in the repository (contrary to .env files with DB access data and other critical information)
@@ -177,6 +180,21 @@ class RaccoonApp
         }
 
         $conf_file = $this->root_dir . '/configuration/' . $env_type . '.php';
+        if (file_exists($conf_file)) {
+            require_once $conf_file;
+        }
+    }
+
+    /**
+     * Loads environments' common configuration if the file exists.
+     * Place your configuration file into /configuration/common.php
+     *
+     * Configuration files can be used to store all the environment data which actually can
+     * and should land in the repository (contrary to .env files with DB access data and other critical information)
+     */
+    protected function MaybeLoadCommonEnvironmentsConfiguration()
+    {
+        $conf_file = $this->root_dir . '/configuration/common.php';
         if (file_exists($conf_file)) {
             require_once $conf_file;
         }

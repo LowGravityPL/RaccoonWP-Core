@@ -1,3 +1,6 @@
+2.4 [25th of September 2020]
+- Allow for storing common environments' configuration in /configuration/common.php which is executed AFTER the environment specific config
+
 2.3.1 [24th of September 2020]
 - change usage of getenv to $_ENV. Potentially dangerous, needs investigation.
 
