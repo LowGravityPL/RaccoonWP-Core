@@ -111,6 +111,14 @@ class RaccoonApp
      */
     protected function setupApplication()
     {
+        /**
+         * Fix SSL behind reverse proxy.
+         * See https://codex.wordpress.org/Function_Reference/is_ssl#Notes
+         */
+        if (isset($_SERVER['HTTP_X_FORWARDED_PROTO']) && $_SERVER['HTTP_X_FORWARDED_PROTO'] === 'https') {
+            $_SERVER['HTTPS'] = 'on';
+        }
+
         $env_type = $_ENV['WP_ENV'] ?: 'production';
         define('WP_ENV', $env_type);
 
