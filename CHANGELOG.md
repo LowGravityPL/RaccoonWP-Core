@@ -1,3 +1,7 @@
+2.4.1 [14th of October 2020]
+- Fix undefined offset notices when accessing $_ENV
+- Fix SSL behind reverse proxy
+
 2.4 [25th of September 2020]
 - Allow for storing common environments' configuration in /configuration/common.php which is executed AFTER the environment specific config
 - use Dotenv::createUnsafeImmutable() for legacy reasons, we should stick to $_ENV though
