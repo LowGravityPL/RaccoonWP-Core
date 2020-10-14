@@ -119,7 +119,7 @@ class RaccoonApp
             $_SERVER['HTTPS'] = 'on';
         }
 
-        $env_type = $_ENV['WP_ENV'] ?: 'production';
+        $env_type = $_ENV['WP_ENV'] ?? 'production';
         define('WP_ENV', $env_type);
 
         //compatibility with the new 5.5 wp_get_environment_type()
@@ -133,24 +133,24 @@ class RaccoonApp
         /**
          * DB settings
          */
-        define('DB_NAME', $_ENV['DB_NAME']);
-        define('DB_USER', $_ENV['DB_USER']);
-        define('DB_PASSWORD', $_ENV['DB_PASSWORD']);
-        define('DB_HOST', $_ENV['DB_HOST'] ?: 'localhost');
+        define('DB_NAME', $_ENV['DB_NAME'] ?? '');
+        define('DB_USER', $_ENV['DB_USER'] ?? '');
+        define('DB_PASSWORD', $_ENV['DB_PASSWORD'] ?? '');
+        define('DB_HOST', $_ENV['DB_HOST'] ?? 'localhost');
         define('DB_CHARSET', 'utf8mb4');
         define('DB_COLLATE', '');
 
-        define('AUTH_KEY', $_ENV['AUTH_KEY']);
-        define('SECURE_AUTH_KEY', $_ENV['SECURE_AUTH_KEY']);
-        define('LOGGED_IN_KEY', $_ENV['LOGGED_IN_KEY']);
-        define('NONCE_KEY', $_ENV['NONCE_KEY']);
-        define('AUTH_SALT', $_ENV['AUTH_SALT']);
-        define('SECURE_AUTH_SALT', $_ENV['SECURE_AUTH_SALT']);
-        define('LOGGED_IN_SALT', $_ENV['LOGGED_IN_SALT']);
-        define('NONCE_SALT', $_ENV['NONCE_SALT']);
+        define('AUTH_KEY', $_ENV['AUTH_KEY'] ?? '');
+        define('SECURE_AUTH_KEY', $_ENV['SECURE_AUTH_KEY'] ?? '');
+        define('LOGGED_IN_KEY', $_ENV['LOGGED_IN_KEY'] ?? '');
+        define('NONCE_KEY', $_ENV['NONCE_KEY'] ?? '');
+        define('AUTH_SALT', $_ENV['AUTH_SALT'] ?? '');
+        define('SECURE_AUTH_SALT', $_ENV['SECURE_AUTH_SALT'] ?? '');
+        define('LOGGED_IN_SALT', $_ENV['LOGGED_IN_SALT'] ?? '');
+        define('NONCE_SALT', $_ENV['NONCE_SALT'] ?? '');
 
         //URLs and directories
-        define('WP_HOME', $_ENV['WP_HOME']);
+        define('WP_HOME', $_ENV['WP_HOME'] ?? '');
 
         if ($_ENV['WP_SITEURL']) {
             define('WP_SITEURL', $_ENV['WP_SITEURL']);
