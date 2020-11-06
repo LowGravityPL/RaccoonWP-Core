@@ -1,3 +1,7 @@
+2.5 [6th of September 2020]
+- fix few undefined index errors
+- add more flexibility to the configuration options
+
 2.4.1 [14th of October 2020]
 - Fix undefined offset notices when accessing $_ENV
 - Fix SSL behind reverse proxy

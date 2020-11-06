@@ -98,7 +98,8 @@ class RaccoonApp
                 [
                     'DB_NAME',
                     'DB_USER',
-                    'DB_PASSWORD'
+                    'DB_PASSWORD',
+                    'WP_HOME'
                 ]
             );
         }
@@ -119,7 +120,7 @@ class RaccoonApp
             $_SERVER['HTTPS'] = 'on';
         }
 
-        $env_type = $_ENV['WP_ENV'] ?? 'production';
+        $env_type = !empty($_ENV['WP_ENV']) ? $_ENV['WP_ENV'] : 'production';
         define('WP_ENV', $env_type);
 
         //compatibility with the new 5.5 wp_get_environment_type()
@@ -133,12 +134,12 @@ class RaccoonApp
         /**
          * DB settings
          */
-        define('DB_NAME', $_ENV['DB_NAME'] ?? '');
-        define('DB_USER', $_ENV['DB_USER'] ?? '');
-        define('DB_PASSWORD', $_ENV['DB_PASSWORD'] ?? '');
-        define('DB_HOST', $_ENV['DB_HOST'] ?? 'localhost');
-        define('DB_CHARSET', 'utf8mb4');
-        define('DB_COLLATE', '');
+        define('DB_NAME', $_ENV['DB_NAME']);
+        define('DB_USER', $_ENV['DB_USER']);
+        define('DB_PASSWORD', $_ENV['DB_PASSWORD']);
+        define('DB_HOST', !empty($_ENV['DB_HOST']) ? $_ENV['DB_HOST'] : 'localhost');
+        define('DB_CHARSET', !empty($_ENV['DB_CHARSET']) ? $_ENV['DB_CHARSET'] : 'utf8mb4');
+        define('DB_COLLATE', !empty($_ENV['DB_COLLATE']) ? $_ENV['DB_COLLATE'] : '');
 
         define('AUTH_KEY', $_ENV['AUTH_KEY'] ?? '');
         define('SECURE_AUTH_KEY', $_ENV['SECURE_AUTH_KEY'] ?? '');
@@ -150,16 +151,23 @@ class RaccoonApp
         define('NONCE_SALT', $_ENV['NONCE_SALT'] ?? '');
 
         //URLs and directories
-        define('WP_HOME', $_ENV['WP_HOME'] ?? '');
+        if (!defined('WP_HOME')) {
+            define('WP_HOME', $_ENV['WP_HOME']);
+        }
 
-        if ($_ENV['WP_SITEURL']) {
+        if (!empty($_ENV['WP_SITEURL'])) {
             define('WP_SITEURL', $_ENV['WP_SITEURL']);
         } else {
             define('WP_SITEURL', $_ENV['WP_HOME'] . '/' . self::WP_INSTALL_DIRECTORY_NAME);
         }
 
-        define('WP_CONTENT_DIR', $this->public_root_dir . '/' . self::CONTENT_DIRECTORY_NAME);
-        define('WP_CONTENT_URL', WP_HOME . '/' . self::CONTENT_DIRECTORY_NAME);
+        if (!defined('WP_CONTENT_DIR')) {
+            define('WP_CONTENT_DIR', $this->public_root_dir . '/' . self::CONTENT_DIRECTORY_NAME);
+        }
+
+        if (!defined('WP_CONTENT_URL')) {
+            define('WP_CONTENT_URL', WP_HOME . '/' . self::CONTENT_DIRECTORY_NAME);
+        }
 
         //Disallow WordPress from updating itself automatically since we manage its version in Composer
         if (!defined('AUTOMATIC_UPDATER_DISABLED')) {
