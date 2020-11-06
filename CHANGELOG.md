@@ -1,4 +1,4 @@
-2.5 [6th of September 2020]
+2.5 [6th of November 2020]
 - fix few undefined index errors
 - add more flexibility to the configuration options
 
