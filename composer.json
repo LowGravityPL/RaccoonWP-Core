@@ -41,7 +41,7 @@
         }
     ],
     "require": {
-        "php": "^7.2",
-        "vlucas/phpdotenv": "^5.2"
+        "php": "^7.3",
+        "vlucas/phpdotenv": "^5.3"
     }
 }
