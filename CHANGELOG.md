@@ -1,3 +1,7 @@
+2.6 [26th of January 2021]
+- bump up minimum php version yto 7.3 as 7.2 is EOL
+- update vlucas/phpdotenv to newest version
+
 2.5 [6th of November 2020]
 - fix few undefined index errors
 - add more flexibility to the configuration options
