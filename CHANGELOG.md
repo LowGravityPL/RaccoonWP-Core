@@ -1,3 +1,6 @@
+2.6.1 [10th of April 2021]
+- maintenance update of symfony polyfills
+
 2.6 [26th of January 2021]
 - bump up minimum php version yto 7.3 as 7.2 is EOL
 - update vlucas/phpdotenv to newest version
