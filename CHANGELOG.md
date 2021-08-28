@@ -1,3 +1,6 @@
+2.6.2 [28th of August 2021]
+- maintenance update of symfony polyfills
+
 2.6.1 [10th of April 2021]
 - maintenance update of symfony polyfills
 - match app required PHP version with composer one (7.3)
