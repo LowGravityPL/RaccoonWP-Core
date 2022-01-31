@@ -1,3 +1,7 @@
+2.7.0 [31st of Jan 2022]
+- bump up min version of PHP to 7.4
+- update composer dependencies like vlucas/phpdotenv and symfony polyfills
+
 2.6.2 [28th of August 2021]
 - maintenance update of symfony polyfills
 
@@ -6,8 +10,8 @@
 - match app required PHP version with composer one (7.3)
 
 2.6 [26th of January 2021]
-- bump up minimum php version yto 7.3 as 7.2 is EOL
-- update vlucas/phpdotenv to newest version
+- bump up minimum php version to 7.3 as 7.2 is EOL
+- update vlucas/phpdotenv to the newest version
 
 2.5 [6th of November 2020]
 - fix few undefined index errors
