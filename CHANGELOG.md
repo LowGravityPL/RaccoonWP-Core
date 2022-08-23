@@ -1,4 +1,7 @@
-2.7.0 [31st of Jan 2022]
+2.8.0 [23rd of August 2022]
+- Add support for PHP 8.x in composer requirements
+
+2.7.0 [31st of January 2022]
 - bump up min version of PHP to 7.4
 - update composer dependencies like vlucas/phpdotenv and symfony polyfills
 
