@@ -1,3 +1,6 @@
+2.8.1 [24th of October 2022]
+- Update `vlucas/phpdotenv` to newest version
+
 2.8.0 [23rd of August 2022]
 - Add support for PHP 8.x in composer requirements
 
