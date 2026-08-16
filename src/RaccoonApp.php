@@ -32,11 +32,22 @@ class RaccoonApp
     protected string $content_dir_name;
 
     /**
+     * Each directory name defaults to the RaccoonWP convention and can be
+     * overridden per install. When overriding the WordPress or content
+     * directory, set the matching Composer path (extra.wordpress-install-dir /
+     * installer-paths) so the build places the files where the app expects them.
+     *
      * @param string|null $root_directory         Root directory of the project.
      * @param string|null $web_root_directory_name Web root directory, e.g. 'public' or 'web'.
+     * @param string|null $wp_directory_name       WordPress install directory, e.g. 'wp'.
+     * @param string|null $content_directory_name  Content (wp-content) directory, e.g. 'core'.
      */
-    public function __construct(?string $root_directory = null, ?string $web_root_directory_name = null)
-    {
+    public function __construct(
+        ?string $root_directory = null,
+        ?string $web_root_directory_name = null,
+        ?string $wp_directory_name = null,
+        ?string $content_directory_name = null
+    ) {
         try {
             $this->checkRequirements();
         } catch (\Exception $e) {
@@ -46,8 +57,8 @@ class RaccoonApp
 
         $this->root_dir = !empty($root_directory) ? $root_directory : '';
         $this->public_root_dir = $this->root_dir . '/' . ($web_root_directory_name ?? self::WEB_ROOT_DIRECTORY_NAME);
-        $this->wp_dir_name = self::WP_INSTALL_DIRECTORY_NAME;
-        $this->content_dir_name = self::CONTENT_DIRECTORY_NAME;
+        $this->wp_dir_name = $wp_directory_name ?? self::WP_INSTALL_DIRECTORY_NAME;
+        $this->content_dir_name = $content_directory_name ?? self::CONTENT_DIRECTORY_NAME;
     }
 
     /**
