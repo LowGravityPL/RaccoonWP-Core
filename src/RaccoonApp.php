@@ -7,41 +7,35 @@ namespace RaccoonWP;
 use Dotenv\Dotenv;
 
 /**
- * Class RaccoonApp
+ * Bootstraps a RaccoonWP install: validates requirements, loads the environment
+ * from .env, and defines the WordPress constants that wp-config would otherwise
+ * set by hand.
  *
  * @package RaccoonWP
  */
 class RaccoonApp
 {
-
-    /** @var string Minimal PHP version */
-    const MIN_PHP_VERSION = '7.3';
-    /** @var string Name of the WP installation directory */
+    /** Minimum supported PHP version. */
+    const MIN_PHP_VERSION = '7.4';
+    /** Name of the WP installation directory. */
     const WP_INSTALL_DIRECTORY_NAME = 'wp';
-    /** @var string Name of the content (wp-content) directory */
+    /** Name of the content (wp-content) directory. */
     const CONTENT_DIRECTORY_NAME = 'core';
-    /** @var string Name of the public (web root) directory */
+    /** Name of the public (web root) directory. */
     const WEB_ROOT_DIRECTORY_NAME = 'public';
 
-    /**
-     * Instance of RaccoonApp
-     *
-     * @var null
-     */
-    protected static $instance = null;
+    protected static ?RaccoonApp $instance = null;
 
-    protected $root_dir;
-    protected $public_root_dir;
-    protected $wp_dir_name;
-    protected $content_dir_name;
+    protected string $root_dir;
+    protected string $public_root_dir;
+    protected string $wp_dir_name;
+    protected string $content_dir_name;
 
     /**
-     * RaccoonApp constructor.
-     *
-     * @param string $root_directory Root directory of the project
-     * @param string $web_root_directory_name web root directory i.e. 'public' or 'web'
+     * @param string|null $root_directory         Root directory of the project.
+     * @param string|null $web_root_directory_name Web root directory, e.g. 'public' or 'web'.
      */
-    public function __construct($root_directory = null, $web_root_directory_name = null)
+    public function __construct(?string $root_directory = null, ?string $web_root_directory_name = null)
     {
         try {
             $this->checkRequirements();
@@ -52,15 +46,16 @@ class RaccoonApp
 
         $this->root_dir = !empty($root_directory) ? $root_directory : '';
         $this->public_root_dir = $this->root_dir . '/' . ($web_root_directory_name ?? self::WEB_ROOT_DIRECTORY_NAME);
+        $this->wp_dir_name = self::WP_INSTALL_DIRECTORY_NAME;
+        $this->content_dir_name = self::CONTENT_DIRECTORY_NAME;
     }
 
     /**
-     * Checks if the system meets minimum requirements like PHP version of presence of DotEnv class
+     * Checks that the system meets the minimum requirements (PHP version, Dotenv present).
      *
-     * @return void
-     * @throws \Exception
+     * @throws \Exception When the PHP version is too low or Dotenv is missing.
      */
-    protected function checkRequirements()
+    protected function checkRequirements(): void
     {
         if (version_compare(phpversion(), self::MIN_PHP_VERSION, '<')) {
             throw new \Exception('Your installed PHP version is not sufficient to run RaccoonWP project');
@@ -71,11 +66,9 @@ class RaccoonApp
     }
 
     /**
-     * Initializes the Raccoon application instance
-     *
-     * @return void
+     * Loads the environment and defines the WordPress constants.
      */
-    public function initialize()
+    public function initialize(): void
     {
         $this->initializeDotEnv();
         $this->setupApplication();
@@ -84,11 +77,9 @@ class RaccoonApp
     }
 
     /**
-     * Use DotEnv and load environment configuration from .env file
-     *
-     * @return void
+     * Loads environment configuration from the .env file via Dotenv.
      */
-    protected function initializeDotEnv()
+    protected function initializeDotEnv(): void
     {
         $dotenv = Dotenv::createUnsafeImmutable($this->root_dir);
 
@@ -106,11 +97,9 @@ class RaccoonApp
     }
 
     /**
-     * Set up all WordPress constants similar way as its done in original wp-config
-     *
-     * @return void
+     * Defines the WordPress constants, the same way the original wp-config does.
      */
-    protected function setupApplication()
+    protected function setupApplication(): void
     {
         /**
          * Fix SSL behind reverse proxy.
@@ -128,8 +117,8 @@ class RaccoonApp
             define('WP_ENVIRONMENT_TYPE', $env_type);
         }
 
-        $this->MaybeLoadEnvironmentConfiguration($env_type);
-        $this->MaybeLoadCommonEnvironmentsConfiguration();
+        $this->maybeLoadEnvironmentConfiguration($env_type);
+        $this->maybeLoadCommonEnvironmentsConfiguration();
 
         /**
          * DB settings
@@ -158,15 +147,15 @@ class RaccoonApp
         if (!empty($_ENV['WP_SITEURL'])) {
             define('WP_SITEURL', $_ENV['WP_SITEURL']);
         } else {
-            define('WP_SITEURL', $_ENV['WP_HOME'] . '/' . self::WP_INSTALL_DIRECTORY_NAME);
+            define('WP_SITEURL', $_ENV['WP_HOME'] . '/' . $this->wp_dir_name);
         }
 
         if (!defined('WP_CONTENT_DIR')) {
-            define('WP_CONTENT_DIR', $this->public_root_dir . '/' . self::CONTENT_DIRECTORY_NAME);
+            define('WP_CONTENT_DIR', $this->public_root_dir . '/' . $this->content_dir_name);
         }
 
         if (!defined('WP_CONTENT_URL')) {
-            define('WP_CONTENT_URL', WP_HOME . '/' . self::CONTENT_DIRECTORY_NAME);
+            define('WP_CONTENT_URL', WP_HOME . '/' . $this->content_dir_name);
         }
 
         //Disallow WordPress from updating itself automatically since we manage its version in Composer
@@ -181,14 +170,14 @@ class RaccoonApp
     }
 
     /**
-     * Loads environment specific configuration if the file exists.
-     * Place your configuration file into /configuration/{ENV_NAME}.php
-     * For example /configuration/production.php
+     * Loads environment-specific configuration if the file exists.
+     * Place your configuration file into /configuration/{ENV_NAME}.php,
+     * for example /configuration/production.php.
      *
-     * Configuration files can be used to store all the environment data which actually can
-     * and should land in the repository (contrary to .env files with DB access data and other critical information)
+     * Configuration files hold environment data that can and should live in the
+     * repository, contrary to .env files with DB credentials and other secrets.
      */
-    protected function MaybeLoadEnvironmentConfiguration($env_type)
+    protected function maybeLoadEnvironmentConfiguration(string $env_type): void
     {
         if (strlen(trim($env_type)) === 0) {
             return;
@@ -201,13 +190,10 @@ class RaccoonApp
     }
 
     /**
-     * Loads environments' common configuration if the file exists.
-     * Place your configuration file into /configuration/common.php
-     *
-     * Configuration files can be used to store all the environment data which actually can
-     * and should land in the repository (contrary to .env files with DB access data and other critical information)
+     * Loads the environments' common configuration if the file exists.
+     * Place your configuration file into /configuration/common.php.
      */
-    protected function MaybeLoadCommonEnvironmentsConfiguration()
+    protected function maybeLoadCommonEnvironmentsConfiguration(): void
     {
         $conf_file = $this->root_dir . '/configuration/common.php';
         if (file_exists($conf_file)) {
@@ -216,25 +202,22 @@ class RaccoonApp
     }
 
     /**
-     * Store the current instance of the class
-     *
-     * @param RaccoonApp $instance
-     * @return RaccoonApp
+     * Stores the current instance of the class.
      */
-    public static function setInstance(RaccoonApp $instance)
+    public static function setInstance(RaccoonApp $instance): self
     {
         return self::$instance = $instance;
     }
 
     /**
-     * Return the instance of the class
+     * Returns the initialized instance.
      *
-     * @return RaccoonApp
+     * @throws \RuntimeException When called before initialize().
      */
-    public static function getInstance()
+    public static function getInstance(): self
     {
-        if (is_null(self::$instance)) {
-            self::$instance = new self();
+        if (self::$instance === null) {
+            throw new \RuntimeException('RaccoonApp has not been initialized yet.');
         }
 
         return self::$instance;
