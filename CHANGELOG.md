@@ -1,3 +1,15 @@
+2.10.0 [22nd of November 2026]
+- Raise the minimum PHP version to 8.3, as older lines no longer get security fixes. Installs on older PHP keep resolving 2.9.0
+- Update `vlucas/phpdotenv` to 5.8
+- Drop the unused wpackagist.org repository
+
+2.9.0 [16th of August 2026]
+- Modernize the environment bootstrap
+- Allow the WordPress and content directories to be relocated per install
+
+2.8.2 [16th of August 2026]
+- Update `vlucas/phpdotenv` to ^5.6
+
 2.8.1 [24th of October 2022]
 - Update `vlucas/phpdotenv` to newest version
 
