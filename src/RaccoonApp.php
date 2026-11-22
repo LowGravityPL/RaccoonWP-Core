@@ -16,7 +16,7 @@ use Dotenv\Dotenv;
 class RaccoonApp
 {
     /** Minimum supported PHP version. */
-    const MIN_PHP_VERSION = '7.4';
+    const MIN_PHP_VERSION = '8.3';
     /** Name of the WP installation directory. */
     const WP_INSTALL_DIRECTORY_NAME = 'wp';
     /** Name of the content (wp-content) directory. */
